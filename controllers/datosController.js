@@ -25,7 +25,7 @@ const testdb = async (req, res) => {
   try {
 
 
-    const query = 'SELECT * FROM public.log';
+    const query = 'SELECT 1';
     const result = await pool.query(query);
 
     console.log("Intento ok" + result)
@@ -45,8 +45,8 @@ const loginPost = async (req, res) => {
     const enteredUsername = req.body.username;
     const enteredPassword = req.body.password;
 
-    const username = 'liclg';
-    const passwordHash = '$2b$10$lG2le1vOdA4DEretyA8OXu.fuOgyIFoF7H5lJysQFIvwfd3hpJYpS';
+    const username = process.env.ADMIN_USER;
+    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
 
     if (enteredUsername === username && await bcrypt.compare(enteredPassword, passwordHash)) {
       res.cookie('username', enteredUsername, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: true });
